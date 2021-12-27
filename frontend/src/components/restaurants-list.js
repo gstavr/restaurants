@@ -29,13 +29,12 @@ function RestaurantsList(props) {
 
   const onChangeSearchCuisine = (e) => {
     const searchCuisine = e.target.value;
-    setSearchCuisine(setSearchCuisine);
+    setSearchCuisine(searchCuisine);
   };
 
   const retrieveRestaurants = () => {
     RestaurantDataService.getAll()
       .then((response) => {
-        console.log(`response Data`, response.data);
         setRestaurants(response.data.restaurants);
       })
       .catch((e) => {
@@ -46,7 +45,6 @@ function RestaurantsList(props) {
   const retrieveCuisines = () => {
     RestaurantDataService.getCuisines()
       .then((response) => {
-        console.log(`Cuisines`, response.data);
         setCuisines(['All Cuisines'].concat(response.data));
       })
       .catch((e) => {
@@ -61,7 +59,6 @@ function RestaurantsList(props) {
   const find = (query, by) => {
     RestaurantDataService.find(query, by)
       .then((response) => {
-        console.log(`Response`, response.data);
         setRestaurants(response.data.restaurants);
       })
       .catch((e) => {
@@ -78,7 +75,7 @@ function RestaurantsList(props) {
   };
 
   const findByCuisine = () => {
-    if (searchCuisine == 'All Cuisines') {
+    if (searchCuisine === 'All Cuisines') {
       refreshList();
     } else {
       find(searchCuisine, 'cuisine');
@@ -88,7 +85,7 @@ function RestaurantsList(props) {
   return (
     <div>
       <div className='row pb-1'>
-        <div className='input-group col-lg-4'>
+        <div className='input-group col-lg-4' style={{ width: 'auto' }}>
           <input type='text' className='form-control' placeholder='Search by name' value={searchName} onChange={onChangeSearchName} />
           <div className='input-group-append'>
             <button className='btn btn-outline-secondary' type='button' onClick={findByName}>
@@ -97,15 +94,15 @@ function RestaurantsList(props) {
             </button>
           </div>
         </div>
-        <div className=' input-group col-lg-4'>
-          <input type='text' className='form-control' value={searchZip} onChange={onChangeSearchZip} />
+        <div className=' input-group col-lg-4' style={{ width: 'auto' }}>
+          <input type='text' className='form-control' value={searchZip} onChange={onChangeSearchZip} placeholder='Seach by ZipCode' />
           <div className='input-group-append'>
             <button className='btn btn-outline-secondary' type='button' onClick={findByZip}>
               Search
             </button>
           </div>
         </div>
-        <div className=' input-group col-lg-4'>
+        <div className=' input-group col-lg-4' style={{ width: 'auto' }}>
           <select onChange={onChangeSearchCuisine}>
             {cuisines.map((cuisine, index) => {
               return (
