@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useParams, Link } from 'react-router-dom';
+import { Routes, Route, useParams, Link, useNavigate } from 'react-router-dom';
 import RestaurantDataService from '../services/restaurant';
 
 function Restaurant(props) {
+  let navigate = useNavigate();
   let { id } = useParams();
   const initialRestaurantState = {
     id: null,
@@ -80,6 +81,10 @@ function Restaurant(props) {
                             >
                               Delete
                             </a>
+                            <Link to={`/restaurants/${id}/review`} {...review} className='btn btn-default'>
+                              {' '}
+                              Edit New{' '}
+                            </Link>
                             <Link
                               to={{
                                 pathname: `/restaurants/${id}/review`,
@@ -89,7 +94,6 @@ function Restaurant(props) {
                               }}
                               className='btn btn-primary col-lg-5 mx-1 mb-1'
                             >
-                              {' '}
                               Edit
                             </Link>
                           </div>

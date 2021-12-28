@@ -3,11 +3,14 @@ import RestaurantDataService from '../services/restaurant';
 import { Link, useParams } from 'react-router-dom';
 
 function AddReview(props) {
+  console.log(props);
   let params = useParams();
+
+  console.log(params);
   let initialReviewState = '';
   let editing = false;
 
-  if (props.location.state && props.location.state.currentReview) {
+  if (props?.state && props?.state?.currentReview) {
     editing = true;
     initialReviewState = props.location.state.currentReview.text;
   }
@@ -22,8 +25,8 @@ function AddReview(props) {
   const saveReview = () => {
     let data = {
       text: review,
-      name: params.user.name,
-      user_id: params.user.id,
+      name: props.user.name,
+      user_id: props.user.id,
       restaurant_id: params.id,
     };
 
@@ -37,6 +40,13 @@ function AddReview(props) {
         .catch((e) => {
           console.log(`Error`, e);
         });
+    } else {
+      RestaurantDataService.createReview(data)
+        .then((response) => {
+          setSubmitted(true);
+          console.log(response.data);
+        })
+        .catch((e) => console.log(`Error`, e));
     }
   };
 
@@ -47,7 +57,7 @@ function AddReview(props) {
           {submitted ? (
             <div>
               <h4>You submitted successfully!</h4>
-              <Link to={`/restaurants/${props.params.id}`} className='btn btn-success'>
+              <Link to={`/restaurants/${params.id}`} className='btn btn-success'>
                 Back to Restaurant
               </Link>
             </div>
